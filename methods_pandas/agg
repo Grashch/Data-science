@@ -54,3 +54,17 @@ python
 .agg({'столбец': 'first'}) # первое значение в группе
 .agg({'столбец': 'last'})  # последнее значение
 
+2. Список функций (несколько сразу)
+python
+df.groupby('region').agg({
+    'sales': ['sum', 'mean', 'count'],
+    'profit': ['sum', 'max']
+})
+Результат — MultiIndex столбцов:
+
+        sales             profit
+        sum  mean count    sum max
+region                           
+A       300 150.0     2     30  20
+B       450 225.0     2     45  30
+
