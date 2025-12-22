@@ -2,9 +2,42 @@
 
 Когда используется agg()
 agg() применяется после:
-
 groupby() — группировка по столбцам;
-
 выбора столбца/серии — агрегация по всему столбцу.
 
 Основная задача: превратить множество значений в одно итоговое (сумму, среднее, счёт и т. п.).
+
+Базовый синтаксис
+python
+df.groupby('столбец_для_группировки').agg({'столбец': 'функция'})
+
+Пусть есть DataFrame:
+
+python
+import pandas as pd
+data = pd.DataFrame({'sales': [100, 200, 150, 300]})
+
+Применяем agg() к столбцу:
+python
+data['sales'].agg('sum')        # 750
+data['sales'].agg('mean')        # 187.5
+data['sales'].agg('count')       # 4
+data['sales'].agg(['sum', 'mean', 'max'])  # словарь с несколькими результатами
+
+Работа с groupby() + agg()
+Пример данных:
+python
+df = pd.DataFrame({
+    'region': ['A', 'A', 'B', 'B'],
+    'sales': [100, 200, 150, 300],
+    'profit': [10, 20, 15, 30]
+})
+Группируем по region и считаем сумму продаж:
+
+python
+df.groupby('region').agg({'sales': 'sum'})
+Результат:
+       sales
+region       
+A         300
+B         450
